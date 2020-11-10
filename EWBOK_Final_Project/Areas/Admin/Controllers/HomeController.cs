@@ -129,7 +129,7 @@ namespace EWBOK_Final_Project.Areas.Admin.Controllers
             var user = new UserDao().ListAll();
             var tableorder = order.Join(user, x => x.CustomerID, y => y.ID, (o, u) => new JoinOrder_User { Order = o, User = u }).OrderBy(x => x.Order.CreateDate).Where(x => x.Order.CreateDate >= fromdate && x.Order.CreateDate <= todate).ToList();
             //table order
-
+            //test github update
             new LogDao().SetLog("Admin_Home_Index", null, ((User)Session[Constants.USER_INFO]).ID);
             return View(tableorder);
         }
