@@ -1,7 +1,7 @@
 ﻿@model List<EWBOK_Final_Project.Models.CartItem>
 @{ decimal? total = 0;}
 <div class="aa-cartbox">
-    <a class="aa-cart-link" href="#">
+    <a class="aa-cart-link" href="/gio-hang">
         <span class="fa fa-shopping-basket"></span>
         <span class="aa-cart-title">GIỎ HÀNG</span>
         <span class="aa-cart-notify">@Model.Count()</span>
@@ -45,7 +45,7 @@
                 <li>Không có sản phẩm trong giỏ hàng</li>
             }
         </ul>
-        @if (Model.Count>0)
+        @if (Model.Count > 0)
         {
             <a class="aa-cartbox-checkout aa-primary-btn" href="/thanh-toan">Thanh toán</a>
         }
