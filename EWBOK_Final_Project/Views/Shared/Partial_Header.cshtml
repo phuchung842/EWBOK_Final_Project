@@ -13,9 +13,11 @@
                         <!-- start header top left -->
                         <div class="aa-header-top-left">
                             <!-- start cellphone -->
-                            <div class="cellphone hidden-xs">
-                                <p><span class="fa fa-phone"></span>0908021048</p>
-                            </div>
+                            <a href="tel:0908021048">
+                                <div class="cellphone hidden-xs">
+                                    <p><span class="fa fa-phone"></span>0908021048</p>
+                                </div>
+                            </a>
                             @if (userinfo != null)
                             {
                                 if (userinfo.GroupID == Constants.GROUP_ADMIM || userinfo.GroupID == Constants.GROUP_EMP)
