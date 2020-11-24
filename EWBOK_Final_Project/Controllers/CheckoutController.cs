@@ -75,7 +75,7 @@ namespace EWBOK_Final_Project.Controllers
                 order.CustomerID = ((User)Session[Constants.USER_INFO]).ID;
             }
             order.CreateDate = DateTime.Now;
-            order.Status = 1;
+            order.Status = -1;
             try
             {
                 var productDao = new ProductDao();
@@ -131,9 +131,12 @@ namespace EWBOK_Final_Project.Controllers
                 }
                 else
                 { }
-                long? cumulativepoint = Convert.ToInt64(total / 1000);
-                ((User)Session[Constants.USER_INFO]).CumulativePoint = ((User)Session[Constants.USER_INFO]).CumulativePoint + cumulativepoint;
-                new UserDao().Update((User)Session[Constants.USER_INFO]);
+                if ((User)Session[Constants.USER_INFO] != null)
+                {
+                    long? cumulativepoint = Convert.ToInt64(total / 1000);
+                    ((User)Session[Constants.USER_INFO]).CumulativePoint = ((User)Session[Constants.USER_INFO]).CumulativePoint + cumulativepoint;
+                    new UserDao().Update((User)Session[Constants.USER_INFO]);
+                }
 
                 string content = System.IO.File.ReadAllText(Server.MapPath("~/Content/client/email_html/Email_checkout.html"));
                 content = content.Replace("{{CustomerName}}", receiver);

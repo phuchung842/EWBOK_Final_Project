@@ -46,6 +46,22 @@ namespace Model.Dao
         {
             return db.Orders.Where(x => x.CustomerID == id).OrderByDescending(x => x.CreateDate).ToList();
         }
+        public List<Order> ListOrderByCustomerId_Implement(long id)
+        {
+            return db.Orders.Where(x => x.CustomerID == id && x.Status == -1).OrderByDescending(x => x.CreateDate).ToList();
+        }
+        public List<Order> ListOrderByCustomerId_Ship(long id)
+        {
+            return db.Orders.Where(x => x.CustomerID == id && x.Status == 0).OrderByDescending(x => x.CreateDate).ToList();
+        }
+        public List<Order> ListOrderByCustomerId_Cancelled(long id)
+        {
+            return db.Orders.Where(x => x.CustomerID == id && x.Status == -2).OrderByDescending(x => x.CreateDate).ToList();
+        }
+        public List<Order> ListOrderByCustomerId_Decline(long id)
+        {
+            return db.Orders.Where(x => x.CustomerID == id && x.Status == -3).OrderByDescending(x => x.CreateDate).ToList();
+        }
         public List<Order> ListByMonthAndYear(int month, int year)
         {
             if (month == 1)

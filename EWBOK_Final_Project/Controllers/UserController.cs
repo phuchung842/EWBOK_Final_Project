@@ -19,6 +19,9 @@ namespace EWBOK_Final_Project.Controllers
         {
             var user = (User)Session[Constants.USER_INFO];
             ViewBag.ListPayment = new OrderDao().ListOrderByCustomerId(user.ID).Join(new OrderDetailDao().ListAllOrderDetail(), x => x.ID, y => y.OrderID, (o, d) => new JoinOrder_OrderDetail { Order = o, OrderDetail = d }).ToList();
+            ViewBag.ListImplement = new OrderDao().ListOrderByCustomerId_Implement(user.ID).Join(new OrderDetailDao().ListAllOrderDetail(), x => x.ID, y => y.OrderID, (o, d) => new JoinOrder_OrderDetail { Order = o, OrderDetail = d }).ToList();
+            ViewBag.ListShip = new OrderDao().ListOrderByCustomerId_Ship(user.ID).Join(new OrderDetailDao().ListAllOrderDetail(), x => x.ID, y => y.OrderID, (o, d) => new JoinOrder_OrderDetail { Order = o, OrderDetail = d }).ToList();
+            ViewBag.ListCancelled= new OrderDao().ListOrderByCustomerId_Cancelled(user.ID).Join(new OrderDetailDao().ListAllOrderDetail(), x => x.ID, y => y.OrderID, (o, d) => new JoinOrder_OrderDetail { Order = o, OrderDetail = d }).ToList();
             ViewBag.ListProduct = new ProductDao().ListAllProduct();
             new LogDao().SetLog("User Info", null, ((User)Session[Constants.USER_INFO]).ID);
             return View(user);

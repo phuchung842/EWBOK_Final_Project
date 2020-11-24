@@ -4,6 +4,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listpayment = (List<JoinOrder_OrderDetail>)ViewBag.ListPayment;
+    var listimplement = (List<JoinOrder_OrderDetail>)ViewBag.ListImplement;
+    var listship = (List<JoinOrder_OrderDetail>)ViewBag.ListShip;
+    var listcancelled = (List<JoinOrder_OrderDetail>)ViewBag.ListCancelled;
     var listproduct = (List<Model.EF.Product>)ViewBag.ListProduct;
 }
 @section jsFooter{
@@ -84,67 +87,260 @@
                     <!-- single sidebar -->
                 </aside>
             </div>
-            
+
+            @*Đơn đang chờ xử lý*@
             <div class="col-lg-12 col-md-12 col-sm-12 col-md-push-0">
-                <label><h3><strong>Danh mục đã thanh toán</strong></h3></label>
+                <label><h3><strong>Đơn đang chờ xử lý</strong></h3></label>
+                @if (listimplement.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered dataTable"  width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th><strong>Tên sách</strong></th>
+                                    <th><strong>Ngày mua</strong></th>
+                                    <th><strong>Giá mua</strong></th>
+                                    <th><strong>Giá đã giảm</strong></th>
+                                    <th><strong>Số lượng</strong></th>
+                                    <th><strong>Người nhận</strong></th>
+                                    <th><strong>SĐT nhận</strong></th>
+                                    <th><strong>Địa chỉ nhận</strong></th>
+                                    <th><strong>Email nhận</strong></th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th><strong>Tên sách</strong></th>
+                                    <th><strong>Ngày mua</strong></th>
+                                    <th><strong>Giá mua</strong></th>
+                                    <th><strong>Giá đã giảm</strong></th>
+                                    <th><strong>Số lượng</strong></th>
+                                    <th><strong>Người nhận</strong></th>
+                                    <th><strong>SĐT nhận</strong></th>
+                                    <th><strong>Địa chỉ nhận</strong></th>
+                                    <th><strong>Email nhận</strong></th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @for (int i = 0; i < listimplement.Count; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j < listproduct.Count; j++)
+                                        {
+                                            if (listproduct[j].ID == listimplement[i].OrderDetail.ProductID)
+                                            {
+                                                <td>@listproduct[i].Name</td>
+                                            }
+                                        }
+                                        <td>@listimplement[i].Order.CreateDate</td>
+                                        <td>@listimplement[i].OrderDetail.Price</td>
+                                        <td>@listimplement[i].OrderDetail.PromotionPrice</td>
+                                        <td>@listimplement[i].OrderDetail.Quantity</td>
+                                        <td>@listimplement[i].Order.ShipName</td>
+                                        <td>@listimplement[i].Order.ShipMobile</td>
+                                        <td>@listimplement[i].Order.ShipAddress</td>
+                                        <td>@listimplement[i].Order.ShipEmail</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <h5 style="text-align:center;">Không có đơn đang chờ xứ lý</h5>
+                }
+            </div>
+
+            @*Đơn hàng đang giao*@
+            <div class="col-lg-12 col-md-12 col-sm-12 col-md-push-0">
+                <label><h3><strong>Đơn hàng đang giao</strong></h3></label>
+                @if (listship.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered dataTable"  width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @for (int i = 0; i < listship.Count; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j < listproduct.Count; j++)
+                                        {
+                                            if (listproduct[j].ID == listship[i].OrderDetail.ProductID)
+                                            {
+                                                <td>@listproduct[i].Name</td>
+                                            }
+                                        }
+                                        <td>@listship[i].Order.CreateDate</td>
+                                        <td>@listship[i].OrderDetail.Price</td>
+                                        <td>@listship[i].OrderDetail.PromotionPrice</td>
+                                        <td>@listship[i].OrderDetail.Quantity</td>
+                                        <td>@listship[i].Order.ShipName</td>
+                                        <td>@listship[i].Order.ShipMobile</td>
+                                        <td>@listship[i].Order.ShipAddress</td>
+                                        <td>@listship[i].Order.ShipEmail</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <h5 style="text-align:center;">Không có đơn hàng nào đang giao</h5>
+                }
+            </div>
+
+            @*Đơn hàng đã thanh toán*@
+            <div class="col-lg-12 col-md-12 col-sm-12 col-md-push-0">
+                <label><h3><strong>Đơn hàng đã thanh toán</strong></h3></label>
                 @if (listpayment.Count > 0)
                 {
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <td><strong>Tên sách</strong></td>
-                                <td><strong>Ngày mua</strong></td>
-                                <td><strong>Giá mua</strong></td>
-                                <td><strong>Giá đã giảm</strong></td>
-                                <td><strong>Số lượng</strong></td>
-                                <td><strong>Người nhận</strong></td>
-                                <td><strong>SĐT nhận</strong></td>
-                                <td><strong>Địa chỉ nhận</strong></td>
-                                <td><strong>Email nhận</strong></td>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <td><strong>Tên sách</strong></td>
-                                <td><strong>Ngày mua</strong></td>
-                                <td><strong>Giá mua</strong></td>
-                                <td><strong>Giá đã giảm</strong></td>
-                                <td><strong>Số lượng</strong></td>
-                                <td><strong>Người nhận</strong></td>
-                                <td><strong>SĐT nhận</strong></td>
-                                <td><strong>Địa chỉ nhận</strong></td>
-                                <td><strong>Email nhận</strong></td>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            @for (int i = 0; i < listpayment.Count; i++)
-                            {
+                    <div class="table-responsive">
+                        <table class="table table-bordered dataTable"  width="100%" cellspacing="0">
+                            <thead>
                                 <tr>
-                                    @for (int j = 0; j < listproduct.Count; j++)
-                                    {
-                                        if (listproduct[j].ID == listpayment[i].OrderDetail.ProductID)
-                                        {
-                                            <td>@listproduct[i].Name</td>
-                                        }
-                                    }
-                                    <td>@listpayment[i].Order.CreateDate</td>
-                                    <td>@listpayment[i].OrderDetail.Price</td>
-                                    <td>@listpayment[i].OrderDetail.PromotionPrice</td>
-                                    <td>@listpayment[i].OrderDetail.Quantity</td>
-                                    <td>@listpayment[i].Order.ShipName</td>
-                                    <td>@listpayment[i].Order.ShipMobile</td>
-                                    <td>@listpayment[i].Order.ShipAddress</td>
-                                    <td>@listpayment[i].Order.ShipEmail</td>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @for (int i = 0; i < listpayment.Count; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j < listproduct.Count; j++)
+                                        {
+                                            if (listproduct[j].ID == listpayment[i].OrderDetail.ProductID)
+                                            {
+                                                <td>@listproduct[i].Name</td>
+                                            }
+                                        }
+                                        <td>@listpayment[i].Order.CreateDate</td>
+                                        <td>@listpayment[i].OrderDetail.Price</td>
+                                        <td>@listpayment[i].OrderDetail.PromotionPrice</td>
+                                        <td>@listpayment[i].OrderDetail.Quantity</td>
+                                        <td>@listpayment[i].Order.ShipName</td>
+                                        <td>@listpayment[i].Order.ShipMobile</td>
+                                        <td>@listpayment[i].Order.ShipAddress</td>
+                                        <td>@listpayment[i].Order.ShipEmail</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 }
                 else
                 {
                     <h5 style="text-align:center;">Chưa thanh toán lần nào</h5>
+                }
+            </div>
+
+            @*Đơn hàng bị huỷ*@
+            <div class="col-lg-12 col-md-12 col-sm-12 col-md-push-0">
+                <label><h3><strong>Đơn hàng bị huỷ</strong></h3></label>
+                @if (listcancelled.Count > 0)
+                {
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable2" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Tên sách</strong></td>
+                                    <td><strong>Ngày mua</strong></td>
+                                    <td><strong>Giá mua</strong></td>
+                                    <td><strong>Giá đã giảm</strong></td>
+                                    <td><strong>Số lượng</strong></td>
+                                    <td><strong>Người nhận</strong></td>
+                                    <td><strong>SĐT nhận</strong></td>
+                                    <td><strong>Địa chỉ nhận</strong></td>
+                                    <td><strong>Email nhận</strong></td>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @for (int i = 0; i < listcancelled.Count; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j < listproduct.Count; j++)
+                                        {
+                                            if (listproduct[j].ID == listcancelled[i].OrderDetail.ProductID)
+                                            {
+                                                <td>@listproduct[i].Name</td>
+                                            }
+                                        }
+                                        <td>@listcancelled[i].Order.CreateDate</td>
+                                        <td>@listcancelled[i].OrderDetail.Price</td>
+                                        <td>@listcancelled[i].OrderDetail.PromotionPrice</td>
+                                        <td>@listcancelled[i].OrderDetail.Quantity</td>
+                                        <td>@listcancelled[i].Order.ShipName</td>
+                                        <td>@listcancelled[i].Order.ShipMobile</td>
+                                        <td>@listcancelled[i].Order.ShipAddress</td>
+                                        <td>@listcancelled[i].Order.ShipEmail</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <h5 style="text-align:center;">Không có đơn hàng nào bị huỷ</h5>
                 }
             </div>
         </div>
