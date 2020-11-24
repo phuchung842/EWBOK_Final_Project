@@ -1,6 +1,5 @@
 ﻿@model List<Model.EF.Slide>
 
-
 <!-- Start slider -->
 <section id="aa-slider">
     <div class="aa-slider-area">
@@ -18,7 +17,7 @@
                                 <span data-seq>EWBOK - Bookstore</span>
                                 <h2 data-seq>@Model[i].Title</h2>
                                 <p data-seq>@Model[i].Decription</p>
-                                <a data-seq href="@Model[i].Link" class="aa-shop-now-btn aa-secondary-btn">*+*+*</a>
+                                @*<a data-seq href="@Model[i].Link" class="aa-shop-now-btn aa-secondary-btn">*+*+*</a>*@
                             </div>
                         </li>
                     }
