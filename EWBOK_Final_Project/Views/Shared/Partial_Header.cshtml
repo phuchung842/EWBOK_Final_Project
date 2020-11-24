@@ -3,6 +3,39 @@
 @{
     var userinfo = (User)Session[Constants.USER_INFO];
 }
+@section jsFooter{
+    <script>
+        $(function () {
+            var availableTags = [
+                "ActionScript",
+                "AppleScript",
+                "Asp",
+                "BASIC",
+                "C",
+                "C++",
+                "Clojure",
+                "COBOL",
+                "ColdFusion",
+                "Erlang",
+                "Fortran",
+                "Groovy",
+                "Haskell",
+                "Java",
+                "JavaScript",
+                "Lisp",
+                "Perl",
+                "PHP",
+                "Python",
+                "Ruby",
+                "Scala",
+                "Scheme"
+            ];
+            $("#tags").autocomplete({
+                source: availableTags
+            });
+        });
+    </script>
+}
 <header id="aa-header">
     <!-- start header top  -->
     <div class="aa-header-top">
@@ -78,9 +111,11 @@
                         @{ Html.RenderAction("Partial_Header_Cart", "Home");}
                         <!-- / cart box -->
                         <!-- search box -->
-                        <div class="aa-search-box">
+                        <div id="tags" class="aa-search-box ui-widget">
                             <form action="/ProductClient/Searching">
-                                <input type="text" name="searchkey" id="searchkey" placeholder="Tìm kiếm">
+
+                                <input type="text" name="searchkey" placeholder="Tìm kiếm">
+
                                 <button type="submit"><span class="fa fa-search"></span></button>
                             </form>
                         </div>

@@ -26,7 +26,7 @@ namespace EWBOK_Final_Project.Controllers
             }
             var product = (List<CartItem>)Session[Constants.CART_SESSION];
             List<CartItem> listcart = new List<CartItem>();
-            if(product!=null)
+            if (product != null)
             {
                 listcart = product;
             }
@@ -36,8 +36,9 @@ namespace EWBOK_Final_Project.Controllers
             }
             return View(listcart);
         }
+
         [HttpPost]
-        public ActionResult Payment(string receiver,string email,string phone, string address)
+        public ActionResult Payment(string receiver, string email, string phone, string address)
         {
             long idtempuser = -1;
             if ((User)Session[Constants.USER_INFO] == null)
@@ -131,9 +132,13 @@ namespace EWBOK_Final_Project.Controllers
                 }
                 else
                 { }
-                long? cumulativepoint = Convert.ToInt64(total / 1000);
-                ((User)Session[Constants.USER_INFO]).CumulativePoint = ((User)Session[Constants.USER_INFO]).CumulativePoint + cumulativepoint;
-                new UserDao().Update((User)Session[Constants.USER_INFO]);
+
+                if ((User)Session[Constants.USER_INFO] != null)
+                {
+                    long? cumulativepoint = Convert.ToInt64(total / 1000);
+                    ((User)Session[Constants.USER_INFO]).CumulativePoint = ((User)Session[Constants.USER_INFO]).CumulativePoint + cumulativepoint;
+                    new UserDao().Update((User)Session[Constants.USER_INFO]);
+                }
 
                 string content = System.IO.File.ReadAllText(Server.MapPath("~/Content/client/email_html/Email_checkout.html"));
                 content = content.Replace("{{CustomerName}}", receiver);
@@ -177,6 +182,7 @@ namespace EWBOK_Final_Project.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public ActionResult Discount5Pct()
         {
             if (((User)Session[Constants.USER_INFO]).CumulativePoint < 500)

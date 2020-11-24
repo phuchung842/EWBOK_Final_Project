@@ -12,7 +12,7 @@ namespace EWBOK_Final_Project.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index() 
+        public ActionResult Index()
         {
             Session[Constants.CURRENT_URL] = HttpContext.Request.RawUrl;
             var newproduct = new ProductDao().ListProductByNew();
@@ -41,6 +41,7 @@ namespace EWBOK_Final_Project.Controllers
             var slide = new SlideDao().ListAllActiveSlide();
             return PartialView(slide);
         }
+
         [ChildActionOnly]
         public ActionResult Partial_Testimonial()
         {
@@ -50,6 +51,7 @@ namespace EWBOK_Final_Project.Controllers
             ViewBag.Member3 = new UserDao().Detail(15);
             return PartialView();
         }
+
         [ChildActionOnly]
         public ActionResult Partial_Menu()
         {
@@ -59,17 +61,20 @@ namespace EWBOK_Final_Project.Controllers
             ViewBag.Author = aut;
             return PartialView();
         }
+
         [ChildActionOnly]
         public ActionResult Partial_Footer()
         {
             var about = new AboutDao().GetDetail(1);
             return PartialView(about);
         }
+
         [ChildActionOnly]
         public ActionResult Partial_Header()
         {
             return PartialView();
         }
+
         [ChildActionOnly]
         public PartialViewResult Partial_Header_Cart()
         {
@@ -81,11 +86,13 @@ namespace EWBOK_Final_Project.Controllers
             }
             return PartialView(listcart);
         }
+
         [ChildActionOnly]
         public ActionResult Partial_Login()
         {
             return PartialView();
         }
+
         [ChildActionOnly]
         public ActionResult Partial_QuickView(List<Product> model)
         {
